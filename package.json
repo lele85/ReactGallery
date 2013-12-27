@@ -1,0 +1,15 @@
+{
+  "name": "ReactGallery",
+  "version": "0.0.1",
+  "description": "Simple Image Gallery usign soksjs and reactjs",
+  "main": "app.js",
+  "dependencies": {
+    "rbytes": "~1.0.0",
+    "sockjs": "~0.3.8",
+    "express": "~3.4.7",
+    "chokidar": "~0.8.1"
+  },
+  "devDependencies": {},
+  "author": "Emanuele Rampichini <emanuele.rampichini@gmail.com>",
+  "license": "MIT"
+}
