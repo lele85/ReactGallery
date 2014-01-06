@@ -15,13 +15,39 @@
 			var that =  this;
 			var imageNodes = Object.keys(that.props.data.images).map(function (path, index) {
 				var activeClass = (that.props.data.active === index) ? "active" : "";
+				var thumbsOpenClass = (that.props.data.thumblistOpen) ? "thumblistOpen" : "";
 	  			return (
-	  				<li className={'galleryImage ' + activeClass}><GalleryImage path={path}></GalleryImage></li>
+	  				<li key={path} className={'galleryImage ' + activeClass + ' ' + thumbsOpenClass}><GalleryImage path={path}></GalleryImage></li>
 	  			);
 			});
 			
 			return (
 					<ul>{imageNodes}</ul>
+			);
+		}
+	});
+
+	var Thumblist = React.createClass({
+		render: function(){
+			var that =  this;
+			var thumbs = Object.keys(that.props.data.images).map(function (path, index) {
+				var activeClass = (that.props.data.active === index) ? "active" : "grayscale";
+	  			return (
+	  				<li key={path} className={'thumb '+ activeClass}>
+	  					<img  onClick={that.props.handleGoTo.bind(that,index)} className={activeClass} src={"/thumbs" + path} />
+	  				</li>
+	  			);
+			});
+			var thumblistStyle = {
+				marginLeft : -204 * that.props.data.active
+			};
+			var openClass = that.props.data.thumblistOpen ? "open" : "closed";
+			return (
+				<div className={'thumblistScroller '+ openClass}>
+					<ul className="thumblist" style={thumblistStyle}>
+						{thumbs}
+					</ul>
+				</div>
 			);
 		}
 	});
@@ -53,7 +79,8 @@
 
 			return {
 				images : images,
-				active : -1
+				active : -1,
+				thumblistOpen : false
 			}
 		},
 		handleNext : function(){
@@ -64,14 +91,31 @@
 			this.state.active =  (this.state.active - 1);
 			if (this.state.active === -1 ) { this.state.active = Object.keys(this.state.images).length - 1;}
 			this.setState(this.state);
-
+		},
+		handleGoTo : function(index){
+			this.state.active = index;
+			this.setState(this.state);
+		},
+		toggleThumblist: function(){
+			this.state.thumblistOpen = this.state.thumblistOpen ? false : true;
+			this.setState(this.state);
 		},
 		render : function(){
+			var openClass = this.state.thumblistOpen ? "open" : "closed";
+			var chevronClass = this.state.thumblistOpen ? "fa-chevron-circle-down" : "fa-chevron-circle-up";
 			return (
 				<div>
 					<Gallery data={this.state}/>
-					<p onClick={this.handleNext} className="galleryButton next"></p>
-					<p onClick={this.handlePrev} className="galleryButton prev"></p>
+					<p onClick={this.handleNext} className="galleryButton next">
+						<span></span>
+					</p>
+					<p onClick={this.handlePrev} className="galleryButton prev">
+						<span></span>
+					</p>
+					<Thumblist data={this.state} handleGoTo={this.handleGoTo} />
+					<span onClick={this.toggleThumblist} className={"toggleThumblist " + openClass}>
+						<i className={'fa ' + chevronClass +' fa-3x'}></i>
+					</span>
 				</div>
 			)
 		}

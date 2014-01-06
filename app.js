@@ -14,7 +14,9 @@ fileStatusSocket.on('connection', function(conn) {
 	
 	['add', 'addDir', 'change', 'unlink', 'unlinkDir'].forEach(function(eventType){
 		watcher.on(eventType, function(path){
-			conn.write(JSON.stringify({ type : eventType, path : "/" + path}));
+			setTimeout(function(){
+				conn.write(JSON.stringify({ type : eventType, path : "/" + path}));
+			},500);
 		});
 	});
 
@@ -38,9 +40,28 @@ fileStatusSocket.installHandlers(server, {prefix:'/filestatus'});
 
 app.use(express.static(__dirname+'/client'));
 
-
-app.get('/gallery/*', function(req, res) {
-    res.sendfile(__dirname + '/gallery/' + req.params[0]);
+app.get('/thumbs/gallery/*', function(req, res, next) {
+	var src_path = __dirname + '/gallery/' + req.params[0];
+    var dst_path = __dirname + '/thumbs/' + req.params[0];
+    fs.exists(dst_path, function(exists) {
+	  if (exists) {
+	    res.sendfile(dst_path);
+	  } else {
+	    require('imagemagick').crop({
+  		srcPath: src_path,
+  		dstPath: dst_path,
+  		width:   200,
+  		height: 120
+  		}, function(err, stdout, stderr){
+			if (!err){res.sendfile(dst_path);}
+		});
+	  }
+	});
+	
 });
+
+app.use("/gallery",  express.static(__dirname + '/gallery'));
+
+
 
 server.listen(8000);

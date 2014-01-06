@@ -50,6 +50,10 @@ body {
 	position: relative;
 }
 .galleryImage {
+		-webkit-transition: 0.3s ease-in-out;
+    -moz-transition: 0.3s ease-in-out;
+    -o-transition: 0.3s ease-in-out;
+    transition: 0.3s ease-in-out;
 	list-style: none;
 	top: 0;
 	left :0;
@@ -57,6 +61,13 @@ body {
 	bottom: 0;
 	position: absolute;
 	display: none;
+}
+.galleryImage.thumblistOpen {
+		-webkit-transition: 0.3s ease-in-out;
+    -moz-transition: 0.3s ease-in-out;
+    -o-transition: 0.3s ease-in-out;
+    transition: 0.3s ease-in-out;
+	bottom: 120px;
 }
 
 .galleryImage.active {
@@ -76,9 +87,11 @@ body {
 }
 
 .galleryButton {
+	cursor: pointer;
 	position: absolute;
 	width: 30%;
 	top: 0;
+	line-height: 100%;
 	bottom: 0;
 }
 .galleryButton.next {
@@ -86,4 +99,124 @@ body {
 }
 .galleryButton.prev {
 	left: 0;
+}
+
+.galleryButton span{
+	display: none;
+	position: fixed;
+	width: 4px;
+	background-color: white;
+
+}
+
+.galleryButton.next:hover span{
+	display: block;
+	right: 0;
+	top : 0;
+	bottom: 0;
+}
+
+.galleryButton.prev:hover span{
+	display: block;
+	left: 0;
+	top : 0;
+	bottom: 0;
+
+}
+
+
+.thumblistScroller {
+	position:fixed;
+	bottom: 0;
+	height: 128px;
+	overflow-x: hidden;
+    overflow-y: hidden;
+    white-space: nowrap;
+	width: 100%;
+	background-color: black;
+}
+.thumblistScroller.open {
+	bottom: 0;
+	-webkit-transition: 0.2s ease-in-out;
+    -moz-transition: 0.2s ease-in-out;
+    -o-transition: 0.2s ease-in-out;
+    transition: 0.2s ease-in-out;
+}
+.thumblistScroller.closed {
+	bottom: -128px;
+	-webkit-transition: 0.2s ease-in-out;
+    -moz-transition: 0.2s ease-in-out;
+    -o-transition: 0.2s ease-in-out;
+    transition: 0.2s ease-in-out;
+}
+
+.thumblist {
+	margin: auto;
+	background-color: black;
+	height: 120px;
+	-webkit-transition: 0.3s ease-in-out;
+    -moz-transition: 0.3s ease-in-out;
+    -o-transition: 0.3s ease-in-out;
+    transition: 0.3s ease-in-out;
+}
+
+.thumblist .thumb {
+	cursor: pointer;
+	list-max: none;
+	display: inline-block;
+	/* for ie7 */
+    *display: inline;
+    zoom: 1;
+	width: 200px;
+	height: 120px;
+	border: 2px solid black;
+}
+
+
+
+.thumblist .thumb img {
+	max-width: 200px;
+	max-height: 120px;
+}
+
+.thumblist .thumb.active {
+	border: 2px solid white;	
+}
+
+img.grayscale {
+	filter: url("data:image/svg+xml;utf8,#grayscale"); /* Firefox 3.5+ */
+	filter: gray; /* IE6-9 */
+	-webkit-filter: grayscale(100%); /* Chrome 19+ & Safari 6+ */
+	filter: grayscale(100%);
+}
+
+.toggleThumblist {
+	cursor: pointer;
+	position: fixed;
+	height: 44px;
+	width: 44px;
+	line-height: 44px;
+}
+
+.toggleThumblist i{
+	color: #fff;
+    text-shadow: 0px 0px 4px #ccc;
+}
+
+.toggleThumblist.closed {
+		-webkit-transition: 0.2s ease-in-out;
+    -moz-transition: 0.2s ease-in-out;
+    -o-transition: 0.2s ease-in-out;
+    transition: 0.2s ease-in-out;
+	bottom: 20px;
+	right: 20px;
+}
+
+.toggleThumblist.open {
+		-webkit-transition: 0.2s ease-in-out;
+    -moz-transition: 0.2s ease-in-out;
+    -o-transition: 0.2s ease-in-out;
+    transition: 0.2s ease-in-out;
+	bottom: 150px;
+	right: 20px;
 }
