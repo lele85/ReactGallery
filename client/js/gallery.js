@@ -38,7 +38,6 @@
 	  				</li>
 	  			);
 			});
-			console.log(that.props.data);
 			var leftOffset = that.props.data.win.width / 2 - 100;
 			
 			var thumblistStyle = {
@@ -72,10 +71,11 @@
 	   		sock.onopen = function() {};
 			sock.onmessage = function(e) {
 				updateGallery(JSON.parse(e.data));
+				var imagesCount = Object.keys(images).length;
 				that.setState(
 					{
 						images : images,
-						active : 0
+						active : (that.state.active <  imagesCount ? that.state.active : imagesCount - 1)
 					});
 			};
 			sock.onclose = function() {};
@@ -87,7 +87,7 @@
 	    			height: 0
 	    		},
 				images : images,
-				active : -1,
+				active : 0,
 				thumblistOpen : false
 			}
 		},
