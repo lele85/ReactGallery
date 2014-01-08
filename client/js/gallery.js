@@ -28,13 +28,17 @@
 	});
 
 	var Thumblist = React.createClass({
+		clickHandler : function(index) {
+			this.props.handleGoTo(index);
+		},
 		render: function(){
 			var that =  this;
 			var thumbs = Object.keys(that.props.data.images).map(function (path, index) {
 				var activeClass = (that.props.data.active === index) ? "active" : "grayscale";
+	  			
 	  			return (
 	  				<li key={path} className={'thumb '+ activeClass}>
-	  					<img  onClick={that.props.handleGoTo.bind(that,index)} className={activeClass} src={"/thumbs" + path} />
+	  					<img  onClick={that.clickHandler.bind(that, index)} className={activeClass} src={"/thumbs" + path} />
 	  				</li>
 	  			);
 			});
