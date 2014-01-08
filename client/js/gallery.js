@@ -38,8 +38,11 @@
 	  				</li>
 	  			);
 			});
+			console.log(that.props.data);
+			var leftOffset = that.props.data.win.width / 2 - 100;
+			
 			var thumblistStyle = {
-				marginLeft : -204 * that.props.data.active
+				marginLeft : leftOffset -(204 * that.props.data.active)
 			};
 			var openClass = that.props.data.thumblistOpen ? "open" : "closed";
 			return (
@@ -77,12 +80,36 @@
 			};
 			sock.onclose = function() {};
 
+
 			return {
+				win : {
+	    			width: 0,
+	    			height: 0
+	    		},
 				images : images,
 				active : -1,
 				thumblistOpen : false
 			}
 		},
+		updateViewport : function(w,h){
+
+			this.state.win = {
+    			width: w,
+    			height: h
+	    	};
+    		this.setState(this.state);
+		},
+	    componentDidMount: function() {
+	    	var win = $(window);
+	    	var that = this;
+	    	that.updateViewport(win.width(),win.height());
+	    	win.on('resize', function(){
+	    		that.updateViewport(win.width(),win.height());
+	    	});
+	    },
+	    componentWillUnmount: function() {
+	    	$(window).off('resize');
+	    },
 		handleNext : function(){
 			this.state.active = (this.state.active + 1) % Object.keys(this.state.images).length;
 			this.setState(this.state);
