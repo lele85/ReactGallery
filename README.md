@@ -1,6 +1,8 @@
 ReactJS Gallery
 ===============
 
+![ReactJS Gallery](https://dl.dropboxusercontent.com/u/848361/simple_image_gallery.jpg "ReactJS Gallery")
+
 That's a simple toy project to test [React JS](http://facebook.github.io/ "React") lib from facebook.
 Client shows fullscreen images from server gallery folder. If you add or remove images from gallery folder the webapp will be updated via **websocket**.
 
