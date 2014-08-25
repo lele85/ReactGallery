@@ -60,7 +60,7 @@
 
 	var GalleryWithControls = React.createClass({
 		getInitialState: function(){
-			var sock = new SockJS('http://127.0.0.1:8000/filestatus');
+			var sock = new SockJS('http://' + window.location.hostname + ':8000/filestatus');
 			var images = {};
 			var updateGallery = function(message){
 				if (message.type === 'add'){
