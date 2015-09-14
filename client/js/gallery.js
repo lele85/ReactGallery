@@ -153,7 +153,8 @@
 	});
 
 
-	React.renderComponent(
+	//React.renderComponent(
+	React.render(
 	  <GalleryWithControls />,
 	  document.getElementById('gallery')
 	);
